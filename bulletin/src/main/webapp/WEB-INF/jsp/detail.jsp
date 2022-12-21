@@ -17,6 +17,7 @@
             margin: auto;
             background-color: #f2f2f2;
             width: 900px;
+            padding:30px;
         }
         
         .title {

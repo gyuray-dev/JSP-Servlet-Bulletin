@@ -13,6 +13,15 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            width: 900px;
+            margin: auto;
+        }
+        
+        .listAmount {
+        	align-self: flex-end;
+        	width: 100px;
+        	margin: 5px;
+        	text-align: center;
         }
         
         .table_header > td {
@@ -40,6 +49,10 @@
         
         .title a {
        		display: inline-block;
+        }
+        
+        .title a:-webkit-any-link {
+        	color: darkslategray;
         }
         
        	.id {
@@ -125,6 +138,12 @@
 </head>
 <body>
     <section>
+    	<select class="listAmount" name="listAmount" onchange="location.href='listAmount?listAmount=' + this.value">
+    		<option value="10" ${ (listAmount == 10)? "selected" : ""}>10개씩 보기</option>
+    		<option value="30" ${ (listAmount == 30)? "selected" : ""}>30개씩 보기</option>
+    		<option value="50" ${ (listAmount == 50)? "selected" : ""}>50개씩 보기</option>
+    		<option value="100" ${ (listAmount == 100)? "selected" : ""}>100개씩 보기</option>
+    	</select>
         <table class="bulletin">
             <tr class="table_header">
                 <td class="id">번호</td>

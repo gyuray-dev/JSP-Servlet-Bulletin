@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,8 +23,31 @@ public class ListController extends HttpServlet {
 		
 		PostDao dao = new PostDao();
 		
+		// 쿠키 검사해서 listAmount 확인
+		String listAmount_ = "10";
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null) {
+			for(Cookie cookie : cookies) {
+				if(cookie.getName().equals("listAmount")) {
+					listAmount_ = cookie.getValue();
+				}
+			}
+		}
+		
+		int listAmount = 0;
+		if(!listAmount_.equals("")) {
+			listAmount = Integer.parseInt(listAmount_);
+		} else {
+			listAmount = 10;
+		}
+
+		System.out.println("listAmount="+listAmount);
+		request.setAttribute("listAmount", listAmount);
+		
+
+		
 		// 마지막 페이지 계산
-		int lastPage = (int) Math.ceil(dao.size() / 5.0);
+		int lastPage = (int) Math.ceil(dao.size() / (double) listAmount);
 		request.setAttribute("lastPage", lastPage);
 		
 		// pager
@@ -37,12 +61,11 @@ public class ListController extends HttpServlet {
 				p = lastPage;
 			}
 		}
-		request.setAttribute("p", p);
-		
 		
 		// 목록 얻기
-		List<Post> posts = dao.getPosts(p, 5);
+		List<Post> posts = dao.getPosts(p, listAmount);
 		request.setAttribute("posts", posts);
+		request.setAttribute("p", p);
 		
 		RequestDispatcher dp = request.getRequestDispatcher("./WEB-INF/jsp/index.jsp");
 		dp.forward(request, response);
