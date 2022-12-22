@@ -177,24 +177,26 @@
         <div class="toolbar">
             <c:set var="firstPage" value="${p - (p - 1) % 5}"/>
             <a id="write" href="editor">글쓰기</a>
+           <!-- 페이저 -->
             <div id="pager">
-                <button onclick="location.href='list?p=${((firstPage - 5) > 1) ? firstPage - 5 : 1}'">⟪</button>
+                <button onclick="location.href='list?p=${((firstPage - 5) > 1) ? firstPage - 5 : 1}&searchType=${param.searchType}&searchContent=${param.searchContent}'">⟪</button>
                 <ul>
 	                <c:forEach var="n" begin="${firstPage}" end="${(firstPage + 4 > lastPage)? lastPage : firstPage + 4}">
-	                    <li><a href="list?p=${n}">${n}</a></li>
+	                    <li><a href="list?p=${n}&searchType=${param.searchType}&searchContent=${param.searchContent}">${n}</a></li>
 	                </c:forEach>
                 </ul>
-                <button onclick="location.href='list?p=${(firstPage + 5) > lastPage ? lastPage : firstPage + 5}'">⟫</button>
+                <button onclick="location.href='list?p=${(firstPage + 5) > lastPage ? lastPage : firstPage + 5}&searchType=${param.searchType}&searchContent=${param.searchContent}'">⟫</button>
             </div>
 	        </div>
+	        <!-- 검색창 -->
             <div class="searchbar">
 	            <form action="list" method="GET">
                     <select name="searchType">
-                       <option value="title">제목</option>
-                       <option value="userName">작성자</option>
-                       <option value="content">내용</option>
+                       <option value="title" ${(param.searchType == "title") ? "selected" : "" }>제목</option>
+                       <option value="userName" ${(param.searchType == "userName") ? "selected" : "" }>작성자</option>
+                       <option value="content" ${(param.searchType == "content") ? "selected" : "" }>내용</option>
                     </select>
-	                <input type="text" name="searchContent"/>
+	                <input type="text" name="searchContent" value="${param.searchContent }"/>
 	                <input type="submit" value="검색"/>
 	            </form>
 	        </div>

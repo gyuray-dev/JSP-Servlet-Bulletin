@@ -16,7 +16,6 @@ public class ListAmountController extends HttpServlet {
 	@Override
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			String listAmount = request.getParameter("listAmount");
-			System.out.println("listAmount="+listAmount);
 			Cookie cookie = new Cookie("listAmount", listAmount);
 			response.addCookie(cookie);
 			response.sendRedirect("list");

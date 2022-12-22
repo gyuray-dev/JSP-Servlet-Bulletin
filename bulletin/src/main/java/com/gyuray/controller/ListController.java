@@ -42,7 +42,7 @@ public class ListController extends HttpServlet {
 		}
 		request.setAttribute("listAmount", listAmount);
 		
-		// 검색 요청
+		// 검색 요청 파라미터 처리
 		String searchContent = (request.getParameter("searchContent") != null) ? request.getParameter("searchContent") : "";
 		String searchType = (request.getParameter("searchType") != null) ? request.getParameter("searchType") : "title";
 		
