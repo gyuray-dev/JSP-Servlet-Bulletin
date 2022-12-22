@@ -194,22 +194,25 @@ public class PostDao {
 	}
 	
 	public List<Post> getPosts() {
-		return getPosts(1, 5);
+		return getPosts(1, 10, "title", "");
 	}
 	
-	public List<Post> getPosts(int page, int amount) {
+	public List<Post> getPosts(int page, int amount, String searchType, String searchContent) {
 		List<Post> posts = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM bulletin_table ORDER BY id DESC LIMIT ? OFFSET ?";
+		String sql = "SELECT * FROM "
+				+ "(SELECT * FROM bulletin_table WHERE " + searchType + " LIKE ?) N "
+				+ "ORDER BY id DESC LIMIT ? OFFSET ?;";
 		
 		try {
 			Class.forName(driverName);
 			conn = DriverManager.getConnection(dbUrl, dbUser, dbPw);
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, amount);
-			ps.setInt(2, amount * (page - 1));
+			ps.setString(1, "%" + searchContent + "%");
+			ps.setInt(2, amount);
+			ps.setInt(3, amount * (page - 1));
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
@@ -238,19 +241,20 @@ public class PostDao {
 		return posts;
 	}
 
-	public int size() {
+	public int size(String searchType, String searchContent) {
 		int size = 0;
 		
 		Connection conn = null;
-		Statement st = null;
+		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String sql = "SELECT COUNT(*) AS nums FROM bulletin_table";
+		String sql = "SELECT COUNT(*) AS nums FROM bulletin_table WHERE " + searchType + " LIKE ? ";
 		
 		try {
 			Class.forName(driverName);
 			conn = DriverManager.getConnection(dbUrl, dbUser, dbPw);
-			st = conn.createStatement();
-			rs = st.executeQuery(sql);
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, "%" + searchContent + "%");
+			rs = ps.executeQuery();
 			
 			while(rs.next()) {
 				size = rs.getInt("nums");
@@ -262,7 +266,7 @@ public class PostDao {
 		} finally {
 			try {
 				rs.close();
-				st.close();
+				ps.close();
 				conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();

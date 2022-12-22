@@ -73,6 +73,7 @@
 
         .otherPage table{
             width: 800px;
+            table-layout: fixed;
             padding: 10px 0;
             margin: 30px 0;
 			border-collapse: collapse;
@@ -86,24 +87,33 @@
             background-color: white;
             border: none;
         }
-        .otherPage .desc{
-       		width: 90px;
+        
+        .otherPage .title a {
+        	text-decoration: none;
+        }
+        
+        .otherPage .title a:-webkit-any-link {
+        	color: darkslategray;
+        }
+        
+        .otherPage .desc {
+       		width: 10%;
        	}
        	
        	.otherPage .writer {
-       		width: 100px;
+       		width: 10%;
        	}
        	
        	.otherPage .regDate {
-       		width: 80px;
+       		width: 23%;
        	}
        	
        	.otherPage .hit {
-       		width: 100px;
+       		width: 7%;
        	}
 
         .otherPage .desc {
-            text-indent: 10px;
+            text-indent: 10%;
         }
 
     </style>

@@ -38,14 +38,17 @@ public class ListController extends HttpServlet {
 		if(!listAmount_.equals("")) {
 			listAmount = Integer.parseInt(listAmount_);
 		} else {
-			listAmount = 10;
+			listAmount = 10; // 쿠키 없을 경우 Default
 		}
 		request.setAttribute("listAmount", listAmount);
 		
-
+		// 검색 요청
+		String searchContent = (request.getParameter("searchContent") != null) ? request.getParameter("searchContent") : "";
+		String searchType = (request.getParameter("searchType") != null) ? request.getParameter("searchType") : "title";
 		
 		// 마지막 페이지 계산
-		int lastPage = (int) Math.ceil(dao.size() / (double) listAmount);
+		int lastPage = (int) Math.ceil(dao.size(searchType, searchContent) / (double) listAmount);
+		lastPage += (lastPage == 0) ? 1 : 0;
 		request.setAttribute("lastPage", lastPage);
 		
 		// pager
@@ -55,13 +58,13 @@ public class ListController extends HttpServlet {
 			p = Integer.parseInt(p_);
 			if(p < 1) { // pager left button 예외처리
 				p = 1;
-			} else if (p > lastPage){ // page right button 예외처리
+			} else if (p > lastPage){ // pager right button 예외처리
 				p = lastPage;
 			}
 		}
 		
 		// 목록 얻기
-		List<Post> posts = dao.getPosts(p, listAmount);
+		List<Post> posts = dao.getPosts(p, listAmount, searchType, searchContent);
 		request.setAttribute("posts", posts);
 		request.setAttribute("p", p);
 		
