@@ -8,6 +8,10 @@
         * {
             box-sizing: border-box;
         }
+        
+        a:-webkit-any-link {
+        	color: black;
+        }
 
         section {
             display: flex;
@@ -119,8 +123,6 @@
             margin: 4px;
 
             font-size: 20px;
-            text-decoration: underline;
-
         }
 
         #pager button {
@@ -141,6 +143,19 @@
         .searchbar form * {
             height: 30px;
             margin: 2px;
+        }
+        
+        .pageBtn {
+        	text-decoration: none;
+        }
+        
+        .selPage {
+        	font-weight: bold;
+	        text-decoration: underline;
+        }
+        
+        .selPage:-webkit-any-link {
+        	color: hotpink;
         }
 
     </style>
@@ -182,7 +197,7 @@
                 <button onclick="location.href='list?p=${((firstPage - 5) > 1) ? firstPage - 5 : 1}&searchType=${param.searchType}&searchContent=${param.searchContent}'">⟪</button>
                 <ul>
 	                <c:forEach var="n" begin="${firstPage}" end="${(firstPage + 4 > lastPage)? lastPage : firstPage + 4}">
-	                    <li><a href="list?p=${n}&searchType=${param.searchType}&searchContent=${param.searchContent}">${n}</a></li>
+	                    <li><a class="pageBtn ${(p == n) ? 'selPage' : ''}" href="list?p=${n}&searchType=${param.searchType}&searchContent=${param.searchContent}">${n}</a></li>
 	                </c:forEach>
                 </ul>
                 <button onclick="location.href='list?p=${(firstPage + 5) > lastPage ? lastPage : firstPage + 5}&searchType=${param.searchType}&searchContent=${param.searchContent}'">⟫</button>

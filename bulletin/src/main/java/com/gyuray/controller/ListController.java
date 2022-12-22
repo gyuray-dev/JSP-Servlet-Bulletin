@@ -43,8 +43,11 @@ public class ListController extends HttpServlet {
 		request.setAttribute("listAmount", listAmount);
 		
 		// 검색 요청 파라미터 처리
-		String searchContent = (request.getParameter("searchContent") != null) ? request.getParameter("searchContent") : "";
-		String searchType = (request.getParameter("searchType") != null) ? request.getParameter("searchType") : "title";
+		String searchContent_ = request.getParameter("searchContent");
+		String searchType_ = request.getParameter("searchType");
+		
+		String searchContent = (searchContent_ != null) ? searchContent_ : "";
+		String searchType = (searchType_ != null && !searchType_.equals("")) ? searchType_ : "title";
 		
 		// 마지막 페이지 계산
 		int lastPage = (int) Math.ceil(dao.size(searchType, searchContent) / (double) listAmount);
