@@ -23,7 +23,7 @@ public class ListController extends HttpServlet {
 		
 		PostDao dao = new PostDao();
 		
-		// 쿠키 검사해서 listAmount 확인
+		// listAmount 처리, 쿠키검사 및 default = 0
 		String listAmount_ = "10";
 		Cookie[] cookies = request.getCookies();
 		if(cookies != null) {
@@ -38,30 +38,30 @@ public class ListController extends HttpServlet {
 		if(!listAmount_.equals("")) {
 			listAmount = Integer.parseInt(listAmount_);
 		} else {
-			listAmount = 10; // 쿠키 없을 경우 Default
+			listAmount = 10; // default 10
 		}
 		request.setAttribute("listAmount", listAmount);
 		
-		// 검색 요청 파라미터 처리
+		// 검색 요청 파라미터 처리, default = "title", ""
 		String searchContent_ = request.getParameter("searchContent");
 		String searchType_ = request.getParameter("searchType");
 		
 		String searchContent = (searchContent_ != null) ? searchContent_ : "";
 		String searchType = (searchType_ != null && !searchType_.equals("")) ? searchType_ : "title";
 		
-		// 마지막 페이지 계산
+		// 마지막 페이지 계산, default = 1
 		int lastPage = (int) Math.ceil(dao.size(searchType, searchContent) / (double) listAmount);
 		lastPage += (lastPage == 0) ? 1 : 0;
 		request.setAttribute("lastPage", lastPage);
 		
-		// pager
+		// 현재페이지 처리, default = 1
 		String p_ = request.getParameter("p");
 		int p = 1;
 		if(p_ != null && !p_.equals("")) {
 			p = Integer.parseInt(p_);
-			if(p < 1) { // pager left button 예외처리
+			if(p < 1) { // pager left button 예외처리(사용자 입력)
 				p = 1;
-			} else if (p > lastPage){ // pager right button 예외처리
+			} else if (p > lastPage){ // pager right button 예외처리(사용자 입력)
 				p = lastPage;
 			}
 		}

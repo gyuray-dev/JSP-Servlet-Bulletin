@@ -54,14 +54,14 @@
 			border-bottom: 1px solid #dedede;
 		}
 		
-		.table_content>td {
+		.table_content > td {
 			padding: 5px 10px;
 			font-size: 16px;
 			text-align: center;
 			color: darkslategray;
 		}
 		
-		.table_content>.title {
+		.table_content > .title {
 			text-align: left;
 			padding-left: 20px;
 			width: 300px;
@@ -219,29 +219,30 @@
 			
 			<!-- 게시글이 없는 경우 -->
 			<c:if test="${empty posts}">
-				<tr class="table_content">
-					<td class="id">등록된 게시글이 없습니다.</td>
+				<tr class="table_content no_content">
+					<td class="id"></td>
+					<td class="title">등록된 게시글이 없습니다.</td>
+					<td class="writer"></td>
+					<td class="regDate"></td>
+					<td class="hit"></td>
 				</tr>
 			</c:if>
 		</table>
 		
 		<div class="toolbar">
-			<c:set var="firstPage" value="${p - (p - 1) % 5}" />
 			<a id="write" href="editor">글쓰기</a>
 			
 			<!-- 페이저 -->
+			<c:set var="firstPage" value="${p - (p - 1) % 5}" />
 			<div id="pager">
-				<button
-					onclick="location.href='list?p=${((firstPage - 5) > 1) ? firstPage - 5 : 1}&searchType=${param.searchType}&searchContent=${param.searchContent}'">◀︎</button>
+				<button onclick="location.href='list?p=${((firstPage - 5) > 1) ? firstPage - 5 : 1}&searchType=${param.searchType}&searchContent=${param.searchContent}'">◀︎</button>
 				<ul>
-					<c:forEach var="n" begin="${firstPage}"
-						end="${(firstPage + 4 > lastPage)? lastPage : firstPage + 4}">
+					<c:forEach var="n" begin="${firstPage}" end="${(firstPage + 4 > lastPage)? lastPage : firstPage + 4}">
 						<li><a class="pageBtn ${(p == n) ? 'selPage' : ''}"
 							href="list?p=${n}&searchType=${param.searchType}&searchContent=${param.searchContent}">${n}</a></li>
 					</c:forEach>
 				</ul>
-				<button
-					onclick="location.href='list?p=${(firstPage + 5) > lastPage ? lastPage : firstPage + 5}&searchType=${param.searchType}&searchContent=${param.searchContent}'">▶︎</button>
+				<button	onclick="location.href='list?p=${(firstPage + 5) > lastPage ? lastPage : firstPage + 5}&searchType=${param.searchType}&searchContent=${param.searchContent}'">▶︎</button>
 			</div>
 		</div>
 		

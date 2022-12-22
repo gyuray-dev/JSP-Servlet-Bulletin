@@ -28,7 +28,7 @@
         }
 
         header .regDate {
-            margin: 0px;
+            margin: 10px 0px;
         }
 
         .detail_body .content {
@@ -149,18 +149,18 @@
 		            <tr class="nextPage">
 		                <td class="desc">▲ 다음글</td>
 		                <td class="title"><a href="detail?id=${nextPost.id}">${nextPost.title}</a></td>
-		                <td class="writer">✏️${nextPost.userName}</td>
-		                <td class="regDate">🗓️${nextPost.regDate}</td>
-		                <td class="hit">👀${nextPost.hit}</td>
+		                <td class="writer">✏️ ${nextPost.userName}</td>
+		                <td class="regDate">🗓️ ${nextPost.regDate}</td>
+		                <td class="hit">👀 ${nextPost.hit}</td>
 		            </tr>
 				</c:if>
 				<c:if test="${!empty prevPost}">
 		            <tr class="prevPage">
 		                <td class="desc">▼ 이전글</td>
 		                <td class="title"><a href="detail?id=${prevPost.id}">${prevPost.title}</a></td>
-		                <td class="writer">✏️${prevPost.userName}</td>
-		                <td class="regDate">🗓️${prevPost.regDate}</td>
-		                <td class="hit">👀${prevPost.hit}</td>
+		                <td class="writer">✏️ ${prevPost.userName}</td>
+		                <td class="regDate">🗓️ ${prevPost.regDate}</td>
+		                <td class="hit">👀 ${prevPost.hit}</td>
 		            </tr>
 				</c:if>
 			</table> 
