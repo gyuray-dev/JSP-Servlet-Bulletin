@@ -24,10 +24,13 @@ public class DetailController extends HttpServlet {
 		Post post = null;
 		if(request.getMethod().equals("GET")) { // 리스트에서 제목을 클릭한 경우 조회수 증가
 			post = dao.getPost(id);
-		} else if(request.getMethod().equals("POST")) { // 기존 글을 수정하여 제출한 경우 조회수 미증가
+		} else if(request.getMethod().equals("POST")) { // 기존 글을 수정한 경우 조회수 미증가
 			post = dao.getPost(id, false);
 		}
 		request.setAttribute("post", post);
+		
+		request.setAttribute("prevPost", dao.getPrevPost(id));
+		request.setAttribute("nextPost", dao.getNextPost(id));
 		
 		RequestDispatcher dp = request.getRequestDispatcher("./WEB-INF/jsp/detail.jsp");
 		dp.forward(request, response);

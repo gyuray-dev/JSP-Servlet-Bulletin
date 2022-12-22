@@ -40,8 +40,6 @@ public class ListController extends HttpServlet {
 		} else {
 			listAmount = 10;
 		}
-
-		System.out.println("listAmount="+listAmount);
 		request.setAttribute("listAmount", listAmount);
 		
 

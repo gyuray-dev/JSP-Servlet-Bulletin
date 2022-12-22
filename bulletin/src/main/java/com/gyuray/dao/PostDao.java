@@ -61,6 +61,89 @@ public class PostDao {
 		return getPost(id, true);
 	}
 	
+	public Post getPrevPost(int id) {		
+		Post post = null;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM (\n"
+				+ "	SELECT * FROM bulletin_table ORDER BY id DESC) N\n"
+				+ "WHERE id < ? LIMIT 1;";
+		
+		try {
+			Class.forName(driverName);
+			conn = DriverManager.getConnection(dbUrl, dbUser, dbPw);
+			
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				int prevId = rs.getInt("id");
+				String title = rs.getString("title");
+				String userName = rs.getString("userName");
+				String regDate = rs.getString("regDate");
+				int hit = rs.getInt("hit");
+				String content = rs.getString("content");
+				post = new Post(prevId, title, userName, regDate, hit, content);
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				}
+			}
+		
+		return post;
+	}
+	
+	public Post getNextPost(int id) {
+		Post post = null;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM bulletin_table WHERE id > ? LIMIT 1";
+		
+		try {
+			Class.forName(driverName);
+			conn = DriverManager.getConnection(dbUrl, dbUser, dbPw);
+			
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				int nextId = rs.getInt("id");
+				String title = rs.getString("title");
+				String userName = rs.getString("userName");
+				String regDate = rs.getString("regDate");
+				int hit = rs.getInt("hit");
+				String content = rs.getString("content");
+				post = new Post(nextId, title, userName, regDate, hit, content);
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				}
+			}
+		return post;
+	}
+	
 	public Post getPost(int id, boolean bHit) {
 		Post post = null;
 		Connection conn = null;

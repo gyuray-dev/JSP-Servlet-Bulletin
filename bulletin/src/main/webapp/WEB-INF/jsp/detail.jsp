@@ -20,18 +20,18 @@
             padding:30px;
         }
         
-        .title {
+        header .title {
             padding: 10px;
             width: 800px;
             border-bottom: 1px solid gray;
             margin: 0px;
         }
 
-        .regDate {
+        header .regDate {
             margin: 0px;
         }
 
-        .content {
+        .detail_body .content {
             padding: 10px;
             width: 800px;
             font-size: 18px;
@@ -70,6 +70,42 @@
            	color: white;
 			background-color: gray;
         }
+
+        .otherPage table{
+            width: 800px;
+            padding: 10px 0;
+            margin: 30px 0;
+			border-collapse: collapse;
+        }
+
+        .otherPage table td {
+            padding: 10px 0;
+        }
+
+        .otherPage table tr {
+            background-color: white;
+            border: none;
+        }
+        .otherPage .desc{
+       		width: 90px;
+       	}
+       	
+       	.otherPage .writer {
+       		width: 100px;
+       	}
+       	
+       	.otherPage .regDate {
+       		width: 80px;
+       	}
+       	
+       	.otherPage .hit {
+       		width: 100px;
+       	}
+
+        .otherPage .desc {
+            text-indent: 10px;
+        }
+
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -96,6 +132,28 @@
                 <a href="editor?id=${post.id}">편집</a>
                 <a href="delete?id=${post.id}">삭제</a>
             </div>
+        </div>
+        <div class="otherPage">
+			<table>
+				<c:if test="${!empty nextPost}">
+		            <tr class="nextPage">
+		                <td class="desc">▲ 다음글</td>
+		                <td class="title"><a href="detail?id=${nextPost.id}">${nextPost.title}</a></td>
+		                <td class="writer">✏️${nextPost.userName}</td>
+		                <td class="regDate">🗓️${nextPost.regDate}</td>
+		                <td class="hit">👀${nextPost.hit}</td>
+		            </tr>
+				</c:if>
+				<c:if test="${!empty prevPost}">
+		            <tr class="prevPage">
+		                <td class="desc">▼ 이전글</td>
+		                <td class="title"><a href="detail?id=${prevPost.id}">${prevPost.title}</a></td>
+		                <td class="writer">✏️${prevPost.userName}</td>
+		                <td class="regDate">🗓️${prevPost.regDate}</td>
+		                <td class="hit">👀${prevPost.hit}</td>
+		            </tr>
+				</c:if>
+			</table> 
         </div>
     </section>
 </body>
