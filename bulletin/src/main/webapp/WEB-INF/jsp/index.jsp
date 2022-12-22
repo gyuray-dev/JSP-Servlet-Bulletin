@@ -103,7 +103,7 @@
             align-self: center;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
 
         }
         
@@ -129,6 +129,18 @@
             width: 30px;
             height: 30px;
             cursor: pointer;
+        }
+
+        .searchbar form{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-self: center;
+        }
+
+        .searchbar form * {
+            height: 30px;
+            margin: 2px;
         }
 
     </style>
@@ -163,9 +175,9 @@
             </c:forEach>
         </table>
         <div class="toolbar">
+            <c:set var="firstPage" value="${p - (p - 1) % 5}"/>
             <a id="write" href="editor">글쓰기</a>
             <div id="pager">
-            	<c:set var="firstPage" value="${p - (p - 1) % 5}"/>
                 <button onclick="location.href='list?p=${((firstPage - 5) > 1) ? firstPage - 5 : 1}'">⟪</button>
                 <ul>
 	                <c:forEach var="n" begin="${firstPage}" end="${(firstPage + 4 > lastPage)? lastPage : firstPage + 4}">
@@ -174,7 +186,18 @@
                 </ul>
                 <button onclick="location.href='list?p=${(firstPage + 5) > lastPage ? lastPage : firstPage + 5}'">⟫</button>
             </div>
-        </div>
+	        </div>
+            <div class="searchbar">
+	            <form action="list" method="GET">
+                    <select name="searchType">
+                       <option value="title">제목</option>
+                       <option value="userName">작성자</option>
+                       <option value="content">내용</option>
+                    </select>
+	                <input type="text" name="searchContent"/>
+	                <input type="submit" value="검색"/>
+	            </form>
+	        </div>
     </section>
 </body>
 </html>
