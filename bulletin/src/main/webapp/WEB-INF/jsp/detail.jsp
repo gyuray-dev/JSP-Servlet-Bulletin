@@ -9,6 +9,10 @@
             box-sizing: border-box;
         }
 
+        table {
+            border-collapse: collapse;
+        }
+
         section {
             display: flex;
             flex-direction: column;
@@ -76,7 +80,6 @@
             table-layout: fixed;
             padding: 10px 0;
             margin: 30px 0;
-			border-collapse: collapse;
         }
 
         .otherPage table td {
@@ -114,6 +117,62 @@
 
         .otherPage .desc {
             text-indent: 10%;
+        }
+
+        .comment {
+            width: 800px;
+        }
+
+        .comment_table {
+        	width: 100%;
+            background-color: white;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        .comment_userName {
+            padding: 10px 0 10px 10px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .comment_userName a {
+            text-decoration: none;
+            color: gray;
+        }
+        .comment_regDate {
+            width: 20%;
+        }
+
+        .comment_userName {
+            width: 80%;
+        }
+        
+        .add_comment {
+            margin: 10px 0;
+        }
+
+        .add_comment_content {
+            border: none;
+            height: 100px;
+            border-radius: 10px;
+            resize: none;
+        }
+
+        .comment_content {
+            padding: 10px 10px;
+        }
+        
+        .add_comment_submit {
+            margin: 10px 0;
+            height: 30px;
+            background-color: white;
+            border: 2px solid hotpink;
+            border-radius: 10px;
+        }
+
+        .commentNumber {
+            font-size: 18px;
+            font-weight: bold;
         }
 
     </style>
@@ -165,6 +224,43 @@
 				</c:if>
 			</table> 
         </div>
+        
+        <!-- 댓글 -->
+        <div class="comment">
+           		<c:if test="${empty comments}">
+					<tr>
+						<td>등록된 댓글이 없습니다.</td>
+					</tr>
+           		</c:if>
+           		
+     		    <c:if test="${!empty comments}">
+                    <p class="commentNumber">${commentCount}개의 댓글</p>
+                    <hr>
+     		    	<c:forEach var="comment" items="${comments}">
+			            <table class="comment_table">
+							<tr>
+			                    <td class="comment_userName">
+			                        <a href="#">${comment.userId}</a>
+			                    </td>
+			                    <td class="comment_regDate">${comment.regDate}</td>
+			                </tr>
+			                <tr>
+			                    <td  class="comment_content" colspan="2">
+			                        ${comment.content}
+			                    </td>
+			                </tr>
+			            </table>
+     		    	</c:forEach>
+           		</c:if>
+        </div>
+        
+        <!-- 댓글 추가 버튼 -->
+        <form action="comment" class="add_comment" method="post">
+            <textarea name="commentContent" class="add_comment_content" cols="30" rows="10" placeholder="댓글을 입력하세요" required></textarea>
+            <input type="submit" class="add_comment_submit" value="댓글 달기">
+            <input type="hidden" name="postId" value="${post.id}">
+        </form>
+        
     </section>
 </body>
 </html>

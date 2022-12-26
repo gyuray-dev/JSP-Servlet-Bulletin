@@ -7,6 +7,7 @@ public class Post {
 	String regDate;
 	int hit;
 	String content;
+	int commentsCount;
 	
 	public Post() {
 		
@@ -21,13 +22,14 @@ public class Post {
 		this.content = content;
 	}
 	
-	public Post(int id, String title, String userName, String regDate, int hit, String content) {
+	public Post(int id, String title, String userName, String regDate, int hit, String content, int commentsCount) {
 		this.id = id;
 		this.title = title;
 		this.userName = userName;
 		this.regDate = regDate;
 		this.hit = hit;
 		this.content = content;
+		this.commentsCount = commentsCount;
 	}
 	
 	public int getId() {
@@ -66,10 +68,18 @@ public class Post {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
+	public int getCommentsCount() {
+		return commentsCount;
+	}
+
+	public void setCommentsCount(int commentsCount) {
+		this.commentsCount = commentsCount;
+	}
 
 	@Override
 	public String toString() {
 		return "Post [id=" + id + ", title=" + title + ", userName=" + userName + ", regDate=" + regDate + ", hit="
-				+ hit + ", content=" + content + "]";
+				+ hit + ", content=" + content + ", commentsCount=" + commentsCount + "]";
 	}
 }

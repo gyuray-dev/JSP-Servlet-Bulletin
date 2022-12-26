@@ -210,7 +210,7 @@
 			<c:forEach var="post" items="${posts}" varStatus="st">
 				<tr class="table_content">
 					<td class="id">${post.id}</td>
-					<td class="title"><a href="detail?id=${post.id}">${post.title}</a></td>
+					<td class="title"><a href="detail?id=${post.id}">${post.title} <b>(${post.commentsCount})</b></a></td>
 					<td class="writer">${post.userName}</td>
 					<td class="regDate">${post.regDate}</td>
 					<td class="hit">${post.hit}</td>

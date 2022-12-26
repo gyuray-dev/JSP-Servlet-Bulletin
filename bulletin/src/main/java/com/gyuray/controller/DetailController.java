@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gyuray.dao.CommentDao;
 import com.gyuray.dao.PostDao;
 import com.gyuray.dto.Post;
 
@@ -18,19 +19,25 @@ public class DetailController extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
 		
-		PostDao dao = new PostDao();
+		// 게시글 받아오기
+		int postId = Integer.parseInt(request.getParameter("id"));
+		
+		PostDao postDao = new PostDao();
 		Post post = null;
 		if(request.getMethod().equals("GET")) { // 리스트에서 제목을 클릭한 경우 조회수 증가
-			post = dao.getPost(id);
+			post = postDao.getPost(postId);
 		} else if(request.getMethod().equals("POST")) { // 기존 글을 수정한 경우 조회수 미증가
-			post = dao.getPost(id, false);
+			post = postDao.getPost(postId, false);
 		}
 		request.setAttribute("post", post);
 		
-		request.setAttribute("prevPost", dao.getPrevPost(id));
-		request.setAttribute("nextPost", dao.getNextPost(id));
+		request.setAttribute("prevPost", postDao.getPrevPost(postId));
+		request.setAttribute("nextPost", postDao.getNextPost(postId));
+		
+		CommentDao commentDao = new CommentDao();
+		request.setAttribute("comments",commentDao.getComments(postId));
+		
 		
 		RequestDispatcher dp = request.getRequestDispatcher("./WEB-INF/jsp/detail.jsp");
 		dp.forward(request, response);

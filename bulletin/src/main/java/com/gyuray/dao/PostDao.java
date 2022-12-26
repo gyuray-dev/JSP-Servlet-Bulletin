@@ -11,7 +11,7 @@ import java.util.List;
 import com.gyuray.dto.Post;
 
 public class PostDao {
-	static String dbUrl = "jdbc:mysql://localhost:3306/bulletindb";
+	static String dbUrl = "jdbc:mysql://localhost:3306/bulletindb?allowMultiQueries=true";
 	static String dbUser ="bulletinuser";
 	static String dbPw = "1234";
 	static String driverName = "com.mysql.cj.jdbc.Driver";
@@ -84,7 +84,8 @@ public class PostDao {
 				String regDate = rs.getString("regDate");
 				int hit = rs.getInt("hit");
 				String content = rs.getString("content");
-				post = new Post(prevId, title, userName, regDate, hit, content);
+				int commentsCount = rs.getInt("commentsCount");
+				post = new Post(prevId, title, userName, regDate, hit, content, commentsCount);
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -125,7 +126,8 @@ public class PostDao {
 				String regDate = rs.getString("regDate");
 				int hit = rs.getInt("hit");
 				String content = rs.getString("content");
-				post = new Post(nextId, title, userName, regDate, hit, content);
+				int commentsCount = rs.getInt("commentsCount");
+				post = new Post(nextId, title, userName, regDate, hit, content, commentsCount);
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -173,7 +175,8 @@ public class PostDao {
 				String regDate = rs.getString("regDate");
 				int hit = rs.getInt("hit");
 				String content = rs.getString("content");
-				post = new Post(id, title, userName, regDate, hit, content);
+				int commentsCount = rs.getInt("commentsCount");
+				post = new Post(id, title, userName, regDate, hit, content, commentsCount);
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -221,7 +224,8 @@ public class PostDao {
 				String regDate = rs.getString("regDate");
 				int hit = rs.getInt("hit");
 				String content = rs.getString("content");
-				posts.add(new Post(id, title, userName, regDate, hit, content));
+				int commentsCount = rs.getInt("commentsCount");
+				posts.add(new Post(id, title, userName, regDate, hit, content, commentsCount));
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -311,13 +315,15 @@ public class PostDao {
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
-		String sql = "DELETE FROM bulletin_table WHERE id=?";
+		String sql = "DELETE FROM bulletin_table WHERE id=?;"
+				+ "DELETE FROM comment_table WHERE postid=?";
 		
 		try {
 			Class.forName(driverName);
 			conn = DriverManager.getConnection(dbUrl, dbUser, dbPw);
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, id);
+			ps.setInt(2, id);
 			deleteCount = ps.executeUpdate();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
