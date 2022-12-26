@@ -60,8 +60,7 @@ public class CommentDao {
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
-		String sql = "INSERT INTO comment_table (postId, userId, commentContent) VALUES (?, ?, ?);"
-					+ "UPDATE bulletin_table SET commentsCount = commentsCount + 1 WHERE id=?";
+		String sql = "INSERT INTO comment_table (postId, userId, commentContent) VALUES (?, ?, ?)";
 
 		try {
 			Class.forName(driverName);
@@ -70,7 +69,6 @@ public class CommentDao {
 			ps.setInt(1, postId);
 			ps.setInt(2, userId);
 			ps.setString(3, commentContent);
-			ps.setInt(4, postId);			
 			insertCount = ps.executeUpdate();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

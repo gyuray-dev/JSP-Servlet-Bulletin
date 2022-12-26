@@ -31,7 +31,7 @@ public class CommentController extends HttpServlet {
 		// userId는 회원 기능 구현 후 추가
 		int userId = 0;
 		
-		System.out.println(dao.addComment(postId, userId, commentContent));
+		dao.addComment(postId, userId, commentContent);
 		
 		RequestDispatcher dp = request.getRequestDispatcher("detail?id=" + postId);
 		dp.forward(request, response);
