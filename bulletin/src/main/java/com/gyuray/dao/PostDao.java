@@ -66,7 +66,7 @@ public class PostDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		String sql = "SELECT * FROM (\n"
-				+ "	SELECT * FROM bulletin_table ORDER BY id DESC) N\n"
+				+ "	SELECT * FROM bulletin_view ORDER BY id DESC) N\n"
 				+ "WHERE id < ? LIMIT 1;";
 		
 		try {
@@ -109,7 +109,7 @@ public class PostDao {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM bulletin_table WHERE id > ? LIMIT 1";
+		String sql = "SELECT * FROM bulletin_view WHERE id > ? LIMIT 1";
 		
 		try {
 			Class.forName(driverName);
@@ -150,7 +150,7 @@ public class PostDao {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM bulletin_table WHERE id=?";
+		String sql = "SELECT * FROM bulletin_view WHERE id=?";
 		
 		try {
 			Class.forName(driverName);
@@ -205,7 +205,7 @@ public class PostDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		String sql = "SELECT * FROM "
-				+ "(SELECT * FROM bulletin_table WHERE " + searchType + " LIKE ?) N "
+				+ "(SELECT * FROM bulletin_view WHERE " + searchType + " LIKE ?) N "
 				+ "ORDER BY id DESC LIMIT ? OFFSET ?;";
 		
 		try {
@@ -250,7 +250,7 @@ public class PostDao {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String sql = "SELECT COUNT(*) AS nums FROM bulletin_table WHERE " + searchType + " LIKE ? ";
+		String sql = "SELECT COUNT(*) AS nums FROM bulletin_view WHERE " + searchType + " LIKE ? ";
 		
 		try {
 			Class.forName(driverName);

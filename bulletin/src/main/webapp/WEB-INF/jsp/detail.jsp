@@ -197,7 +197,7 @@
                 ${post.content}
             </p>
             <div class="btns">
-                <a href="list?id=${post.id}">목록</a>
+                <a href="list?id=${post.id}&p=${param.p}">목록</a>
                 <a href="editor?id=${post.id}">편집</a>
                 <a href="delete?id=${post.id}">삭제</a>
             </div>
