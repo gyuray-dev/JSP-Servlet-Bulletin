@@ -119,4 +119,33 @@ public class CommentDao {
 		
 		return count;
 	}
+	
+	public int deleteComment(int commentId) {
+		int deleteCount = 0;
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		String sql = "DELETE FROM comment_table WHERE commentId=?";
+
+		try {
+			Class.forName(driverName);
+			conn = DriverManager.getConnection(dbUrl, dbUser, dbPw);
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, commentId);
+			deleteCount = ps.executeUpdate();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return deleteCount;
+	}
 }

@@ -163,6 +163,28 @@
         .comment_content {
             padding: 10px 10px;
         }
+
+		.comment_regDate {
+            white-space: nowrap;
+            padding-right: 20px;
+		}
+		        
+        .comment_delete {
+            background-color: gray;
+            color: white;
+            border: 1px solid gray;
+            border-radius: 3px;
+            padding: 0 5px;
+            width: 30px;
+            cursor: pointer;
+        }
+        .comment_delete_form {
+        	width: 30px;
+        }
+        
+        .comment_delete_td {
+        	padding-right: 10px;
+        }
         
         .add_comment_submit {
             margin: 10px 0;
@@ -245,9 +267,17 @@
 			                        <a href="#">${comment.userId}</a>
 			                    </td>
 			                    <td class="comment_regDate">${comment.regDate}</td>
+			                    <td class="comment_delete_td">
+			                    	<form action="comment" method="POST" class="comment_delete_form">
+			                    		<input type="submit" class="comment_delete" value="X️"/>
+			                    		<input type="hidden" name="commentId" value="${comment.commentId}"/>
+			                    		<input type="hidden" name="_method" value="DELETE"/>
+            							<input type="hidden" name="postId" value="${post.id}">
+			                    	</form>
+			                    </td>
 			                </tr>
 			                <tr>
-			                    <td  class="comment_content" colspan="2">
+			                    <td  class="comment_content" colspan="3">
 			                        ${comment.content}
 			                    </td>
 			                </tr>
