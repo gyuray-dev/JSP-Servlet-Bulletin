@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gyuray.dao.PostDao;
-import com.gyuray.dto.Post;
+import com.gyuray.dto.PostView;
 
 @WebServlet("/list")
 public class ListController extends HttpServlet {
@@ -67,7 +67,7 @@ public class ListController extends HttpServlet {
 		}
 		
 		// 목록 얻기
-		List<Post> posts = dao.getPosts(p, listAmount, searchType, searchContent);
+		List<PostView> posts = dao.getPosts(p, listAmount, searchType, searchContent);
 		request.setAttribute("posts", posts);
 		request.setAttribute("p", p);
 		

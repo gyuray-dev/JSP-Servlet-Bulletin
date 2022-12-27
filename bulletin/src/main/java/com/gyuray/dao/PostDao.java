@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gyuray.dto.Post;
+import com.gyuray.dto.PostView;
 
 public class PostDao {
 	static String dbUrl = "jdbc:mysql://localhost:3306/bulletindb?allowMultiQueries=true";
@@ -55,7 +56,7 @@ public class PostDao {
 		return insertCount;
 	}
 	
-	public Post getPost(int id) {
+	public PostView getPost(int id) {
 		// 게시글 조회 시 default true -> 조회수 증가
 		return getPost(id, true);
 	}
@@ -84,8 +85,7 @@ public class PostDao {
 				String regDate = rs.getString("regDate");
 				int hit = rs.getInt("hit");
 				String content = rs.getString("content");
-				int commentsCount = rs.getInt("commentsCount");
-				post = new Post(prevId, title, userName, regDate, hit, content, commentsCount);
+				post = new Post(prevId, title, userName, regDate, hit, content);
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -126,8 +126,7 @@ public class PostDao {
 				String regDate = rs.getString("regDate");
 				int hit = rs.getInt("hit");
 				String content = rs.getString("content");
-				int commentsCount = rs.getInt("commentsCount");
-				post = new Post(nextId, title, userName, regDate, hit, content, commentsCount);
+				post = new Post(nextId, title, userName, regDate, hit, content);
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -145,8 +144,8 @@ public class PostDao {
 		return post;
 	}
 	
-	public Post getPost(int id, boolean bHit) {
-		Post post = null;
+	public PostView getPost(int id, boolean bHit) {
+		PostView post = null;
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -176,7 +175,7 @@ public class PostDao {
 				int hit = rs.getInt("hit");
 				String content = rs.getString("content");
 				int commentsCount = rs.getInt("commentsCount");
-				post = new Post(id, title, userName, regDate, hit, content, commentsCount);
+				post = new PostView(id, title, userName, regDate, hit, content, commentsCount);
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -195,12 +194,12 @@ public class PostDao {
 		return post;
 	}
 	
-	public List<Post> getPosts() {
+	public List<PostView> getPosts() {
 		return getPosts(1, 10, "title", "");
 	}
 	
-	public List<Post> getPosts(int page, int amount, String searchType, String searchContent) {
-		List<Post> posts = new ArrayList<>();
+	public List<PostView> getPosts(int page, int amount, String searchType, String searchContent) {
+		List<PostView> posts = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -223,9 +222,8 @@ public class PostDao {
 				String userName = rs.getString("userName");
 				String regDate = rs.getString("regDate");
 				int hit = rs.getInt("hit");
-				String content = rs.getString("content");
 				int commentsCount = rs.getInt("commentsCount");
-				posts.add(new Post(id, title, userName, regDate, hit, content, commentsCount));
+				posts.add(new PostView(id, title, userName, regDate, hit, commentsCount));
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

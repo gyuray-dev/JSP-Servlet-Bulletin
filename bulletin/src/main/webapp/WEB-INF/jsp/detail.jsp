@@ -20,8 +20,9 @@
             align-items: center;
             margin: auto;
             background-color: #f2f2f2;
-            width: 900px;
-            padding:30px;
+            width: 850px;
+            padding-top: 10px;
+            border-radius: 10px;
         }
         
         header .title {
@@ -75,13 +76,13 @@
 			background-color: gray;
         }
 
-        .otherPage table{
+        .otherPage table {
             width: 800px;
             table-layout: fixed;
             padding: 10px 0;
             margin: 30px 0;
         }
-
+         
         .otherPage table td {
             padding: 10px 0;
         }
@@ -156,6 +157,7 @@
             height: 100px;
             border-radius: 10px;
             resize: none;
+            padding: 10px;
         }
 
         .comment_content {
@@ -234,7 +236,7 @@
            		</c:if>
            		
      		    <c:if test="${!empty comments}">
-                    <p class="commentNumber">${commentCount}개의 댓글</p>
+                    <p class="commentNumber">${post.commentsCount}개의 댓글</p>
                     <hr>
      		    	<c:forEach var="comment" items="${comments}">
 			            <table class="comment_table">
