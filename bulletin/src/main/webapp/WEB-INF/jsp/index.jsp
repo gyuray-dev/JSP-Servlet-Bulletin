@@ -184,6 +184,31 @@
 			border: 1px solid gray;
 			border-radius: 3px;
 		}
+
+        header {
+            display: flex;
+            justify-content: right;
+            width: 900px;
+			margin: auto;
+            margin-bottom: 10px;
+        }
+
+        .signUpBtn, .signInBtn, .signOutBtn {
+            border: 1px solid gray;
+            background-color: gray;
+            color: white;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .signUpBtn:-webkit-any-link, .signInBtn:-webkit-any-link, .signOutBtn:-webkit-any-link {
+            color: white;
+        } 
+
+        .signUpBtn {
+            margin-right: 5px;
+        }
+
 	</style>
 	
 <meta charset="UTF-8">
@@ -191,6 +216,15 @@
 <title>Bulletin</title>
 </head>
 <body>
+    <header>
+    	<c:if test="${empty sessionScope.userNum}">
+	        <a class="signUpBtn" href="signup">회원가입</a>
+	        <a class="signInBtn" href="signin">로그인</a>
+    	</c:if>
+    	<c:if test="${!empty sessionScope.userNum}">
+	        <a class="signOutBtn" href="signout">로그아웃</a>
+    	</c:if>
+    </header>
 	<section>
 		<select class="listAmount" name="listAmount"
 			onchange="location.href='listAmount?listAmount=' + this.value">

@@ -13,12 +13,7 @@ public class Post {
 	}
 	
 	public Post(String title, String userName, String content) {
-		this.id = 0;
-		this.title = title;
-		this.userName = userName;
-		this.regDate = " ";
-		this.hit = 0;
-		this.content = content;
+		this(0, title, userName, "", 0, content);
 	}
 	
 	public Post(int id, String title, String userName, String regDate, int hit, String content) {
