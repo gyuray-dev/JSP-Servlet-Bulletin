@@ -75,13 +75,32 @@
             </div>
             <div class="passwordInput">
                 <label for="userPassword">비밀번호</label>
-                <input type="password" name="userPassword" pattern=".{4,12}" title="4~12 글자" required/>
+                <input id="password" type="password" name="userPassword" pattern=".{4,12}" title="4~12 글자" required />
+                <input id="encryptedPassword" type="hidden" name="encryptedPassword" />
             </div>
             <div class="submitBtn">
-                <input type="submit" value="로그인"/>
+                <input id="signin" type="button" value="로그인"/>
             </div>
         </form>
        	<a class="cancleBtn" href="list">취소</a>
     </section>
+    <script type="text/javascript" src="./js/jsencrypt.min.js"></script>
+    <script type="text/javascript">
+        let encryptedPassword = document.querySelector("#encryptedPassword");
+    	let signinForm = document.querySelector(".signIn_Form");
+   		let passwordInput = document.querySelector("#password");
+   		let signinButton = document.querySelector("#signin");
+    	let publicKey = '${publicKey}';
+    	let crypt = new JSEncrypt();
+    	crypt.setPrivateKey(publicKey);
+    	
+    	signinButton.addEventListener("click", function(e) {
+    		e.stopPropagation();
+    		let encryptedText = crypt.encrypt(passwordInput.value);
+    		passwordInput.value = "";
+    		encryptedPassword.value = encryptedText;
+    		signinForm.submit();
+    	});
+    </script>
 </body>
 </html>
