@@ -103,10 +103,15 @@
     	let userNameInput = document.querySelector("#userNameInput"); 
     	let userEmailInput = document.querySelector("#userEmailInput"); 
     	
+    	let valId = document.querySelector(".val_id");    	
+    	let valName = document.querySelector(".val_name");    	
+    	let valEmail = document.querySelector(".val_email");  
+    	
     	signupButton.addEventListener("click", function(e) {
+    		e.stopPropagation();
     		// 양식 유효성 검사
-    		if(userIdInput.value.length < 4 || userIdInput.value.length > 12) {
-    			alert("아이디는 6~14글자 범위로 입력해주세요.");
+    		if(userIdInput.value.length < 4 || userIdInput.value.length > 14) {
+    			alert("아이디는 6~12글자 범위로 입력해주세요.");
     		} else if(userNameInput.value.length < 2 || userNameInput.value.length > 10) {
     			alert("닉네임은 2~10글자 범위로 입력해주세요.");
     		} else if(userPasswordInput.value.length < 4 || userPasswordInput.value.length > 14) {
@@ -114,19 +119,24 @@
     		} else if(userEmailInput.value.length < 4 || userEmailInput.value.indexOf('@') == -1 || userEmailInput.value.indexOf('.') == -1) {
     			alert("유효한 이메일을 입력해주세요.");
     		} else {
-	    		// 암호화
-	    		e.stopPropagation();
-	    		let encryptedText = crypt.encrypt(userPasswordInput.value);
-	    		userPasswordInput.value = "";
-	    		encryptedPassword.value = encryptedText;
-	    		signUpForm.submit();
+    			areDup(userIdInput.value, userNameInput.value, userEmailInput.value, function(bool) {
+    				if(bool) {
+	       	    		// 암호화
+	       	    		let encryptedText = crypt.encrypt(userPasswordInput.value);
+	       	    		userPasswordInput.value = "";
+	       	    		encryptedPassword.value = encryptedText;
+	       	    		signUpForm.submit();
+    				} else {
+    					alert("유효한 값을 입력해주세요.");
+    				}
+    			});
     		}
     	});
     	
     	//중복 검사
-    	
-    	
     	let dupChecker = function(e, column, type, min, max, valMsg) {
+    		
+    		// 콜백 함수
     		let dupCheck = function (bool) {
         		if(bool) {
         			valMsg.innerText = "이미 존재하는 " + type +"입니다.";
@@ -137,56 +147,66 @@
        			}
     		}
     		
-    		if(e.target.value.length < min || userIdInput.value.length > max) {
+    		if(e.target.value.length < min || e.target.value.length > max) {
     			valMsg.innerText = min + "~" + max + "자 범위로 입력해주세요.";
     			valMsg.style.color = "red";
-   			} else {
+    		} else {
 	    		isDup(column, e.target.value, dupCheck);
    			}
     	};
     	
+    	//입력 시마다 유효성 검사
     	userIdInput.addEventListener("keyup", function(e) {
-        	let valMsg = document.querySelector(".val_id");    	
-    		dupChecker(e, "userId", "아이디", 6, 12, valMsg);
+        	let valMsg = document.querySelector(".val_id");
+    		dupChecker(e, "userId", "아이디", 6, 14, valMsg);
+    		if(e.target.value.length == 0) {valMsg.innerText = "";}
     	});
     	userNameInput.addEventListener("keyup", function(e) {
         	let valMsg = document.querySelector(".val_name");    	
     		dupChecker(e, "userName", "닉네임", 2, 10, valMsg);
+    		if(e.target.value.length == 0) {valMsg.innerText = "";}
     	});
     	userEmailInput.addEventListener("keyup", function(e) {
-        	let valMsg = document.querySelector(".val_email");    	
-    		dupChecker(e, "userId", "이메일", 5, 100, valMsg);
+        	let valMsg = document.querySelector(".val_email");
+    		dupChecker(e, "userEmail", "이메일", 5, 50, valMsg);
+    		if(e.target.value.length == 0) {valMsg.innerText = "";}
     	});
     	
-
-    	
-    	function isDup(column, value, dupCheck) {
+    	// input 유효성 검사 ajax
+    	function isDup(column, value, callback) {
 	   		let request = new XMLHttpRequest();
 	   		request.open("GET", "isdup?column=" + encodeURIComponent(column) + "&value=" + encodeURIComponent(value), true);
 	   		request.onreadystatechange = function() {
 	   			if(request.readyState == 4 && request.status == 200) {
 		   			if(request.responseText == 'true') {
-		   				dupCheck(true);
+		   				callback(true);
 		   			} else {
-		   				dupCheck(false);
+		   				callback(false);
 		   			}
 		   			
 	   			}
 	   		}
 	   		request.send();
     	}
+    	
+    	// 가입하기 버튼 유효성 검사 ajax
+    	function areDup(userId, userName, userEmail, callback) {
+	   		let request = new XMLHttpRequest();
+	   		request.open("POST", "isdup?userId=" + encodeURIComponent(userId) + "&userName=" + encodeURIComponent(userName) + "&userEmail=" + encodeURIComponent(userEmail), true);
+	   		request.onreadystatechange = function() {
+	   			if(request.readyState == 4 && request.status == 200) {
+		   			if(request.responseText == 'true') {
+		   				callback(true);
+		   			} else {
+		   				callback(false);
+		   			}
+		   			
+	   			}
+	   		}
+	   		request.send();
+    	}
+    	
+    
 
     </script>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-

@@ -18,15 +18,24 @@ public class SignupDubController extends HttpServlet {
 		String column = request.getParameter("column");
 		String value = request.getParameter("value");
 		UserDao dao = new UserDao();
-		String resBool = "";
+		String result = "";
 		if(dao.isDup(column, value)) {
-			resBool = "true";
+			result = "true";
 		}
-		System.out.printf("col=%s, val=%s\n", column, value);
-		response.getWriter().write(resBool);
+		response.getWriter().write(result);
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String userId = request.getParameter("userId");
+		String userName = request.getParameter("userName");
+		String userEmail = request.getParameter("userEmail");
+		
+		UserDao dao = new UserDao();
+		String result = "true";
+		if(dao.areDup(userId, userName, userEmail)) {
+			result ="";
+		}
+		response.getWriter().write(result);
 	}
 
 }

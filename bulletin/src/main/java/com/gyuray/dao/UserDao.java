@@ -183,4 +183,36 @@ public class UserDao {
 		
 		return true;
 	}
+
+	public boolean areDup(String userId, String userName, String userEmail) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM user_table WHERE userId=? OR userName=? OR userEmail=?";
+		
+		try {
+			Class.forName(driverName);
+			conn = DriverManager.getConnection(dbUrl, dbUser, dbPw);
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, userId);
+			ps.setString(2, userName);
+			ps.setString(3, userEmail);
+			rs = ps.executeQuery();
+			return rs.next();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return true;
+	}
 }
