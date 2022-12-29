@@ -7,10 +7,12 @@
 <title>로그인 페이지</title>
 <style>
     section {
-        width: 300px;
-        height: 150px;
+    	display: flex;
+    	flex-direction: column;
+    	width: 350px;
         margin: auto;
         border: 1px solid gray;
+        padding: 20px 0;
     }
     
     .signIn_Form {
@@ -53,11 +55,12 @@
 	.cancleBtn {
 		background-color: gray;
 		border: 1px solid gray;
-		padding: 10px;
+		padding: 3px 10px;
 		cursor: pointer;
 		border-radius: 3px;
 		text-decoration: none;
-		margin-top: 20px;
+		margin-top: 5px;
+		align-self: center;
 	}
 	
 	.cancleBtn:visited {

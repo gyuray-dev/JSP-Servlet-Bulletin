@@ -153,4 +153,34 @@ public class UserDao {
 		
 		return deleteCount;
 	}
+
+	public boolean isDup(String column, String value) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM user_table WHERE " + column + "=?";
+		
+		try {
+			Class.forName(driverName);
+			conn = DriverManager.getConnection(dbUrl, dbUser, dbPw);
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, value);
+			rs = ps.executeQuery();
+			return rs.next();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return true;
+	}
 }
