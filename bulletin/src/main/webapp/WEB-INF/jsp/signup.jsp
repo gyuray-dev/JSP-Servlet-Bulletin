@@ -65,12 +65,12 @@
                 <label for="userId">아이디</label>
                 <input id="userIdInput" type="text" name="userId" />
             </div>
-            <div class="validation val_id"></div>
+            <div class="validation val_id"></div> <!-- validation message -->
             <div class="inputDiv">
                 <label for="userName">닉네임</label>
                 <input id="userNameInput" type="text" name="userName" />
             </div>
-            <div class="validation val_name">중복된 닉네임입니다.</div>
+            <div class="validation val_name"></div>  <!-- validation message -->
             <div class="inputDiv">
                 <label for="userPassword">비밀번호</label>
                 <input id="passwordInput" type="password" name="userPassword"/>
@@ -80,7 +80,7 @@
                 <label for="userEmail">이메일</label>
                 <input id="userEmailInput" type="email" name="userEmail" />
             </div>
-            <div class="validation val_email">중복된 이메일입니다.</div>
+            <div class="validation val_email"></div> <!-- validation message -->
             <div class="submitBtn">
                 <input id="signup" type="button" value="가입하기"/>
             </div>
@@ -125,28 +125,40 @@
     	
     	//중복 검사
     	
-    	var valName = document.querySelector(".val_name");    	
-    	var valEmail = document.querySelector(".val_email");    	
-    	var valId = document.querySelector(".val_id");    	
     	
-    	userIdInput.addEventListener("keyup", function(e) {
+    	let dupChecker = function(e, column, type, min, max, valMsg) {
     		let dupCheck = function (bool) {
         		if(bool) {
-        			valId.innerText = "이미 존재하는 아이디입니다.";
-        			valId.style.color = "red";
+        			valMsg.innerText = "이미 존재하는 " + type +"입니다.";
+        			valMsg.style.color = "red";
        			} else {
-        			valId.innerText = "사용 가능한 아이디입니다.";
-        			valId.style.color = "green";
+       				valMsg.innerText = "사용 가능한 " + type +"입니다.";
+       				valMsg.style.color = "green";
        			}
     		}
     		
-    		if(userIdInput.value.length < 6 || userIdInput.value.length > 12) {
-    			valId.innerText = "6~12글자 범위로 입력해주세요.";
-        			valId.style.color = "red";
+    		if(e.target.value.length < min || userIdInput.value.length > max) {
+    			valMsg.innerText = min + "~" + max + "자 범위로 입력해주세요.";
+    			valMsg.style.color = "red";
    			} else {
-	    		isDup("userId", e.target.value, dupCheck);
+	    		isDup(column, e.target.value, dupCheck);
    			}
+    	};
+    	
+    	userIdInput.addEventListener("keyup", function(e) {
+        	let valMsg = document.querySelector(".val_id");    	
+    		dupChecker(e, "userId", "아이디", 6, 12, valMsg);
     	});
+    	userNameInput.addEventListener("keyup", function(e) {
+        	let valMsg = document.querySelector(".val_name");    	
+    		dupChecker(e, "userName", "닉네임", 2, 10, valMsg);
+    	});
+    	userEmailInput.addEventListener("keyup", function(e) {
+        	let valMsg = document.querySelector(".val_email");    	
+    		dupChecker(e, "userId", "이메일", 5, 100, valMsg);
+    	});
+    	
+
     	
     	function isDup(column, value, dupCheck) {
 	   		let request = new XMLHttpRequest();
