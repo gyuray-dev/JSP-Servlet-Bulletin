@@ -28,7 +28,7 @@ public class PostDao {
 		PreparedStatement ps = null;
 		String sql = "INSERT "
 				+ "INTO bulletin_table "
-				+ "(title, userName, content) "
+				+ "(title, userName, content, files) "
 				+ "VALUES "
 				+ "(?, ?, ?, ?)";
 		
