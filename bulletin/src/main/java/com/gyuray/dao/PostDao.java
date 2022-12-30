@@ -30,7 +30,7 @@ public class PostDao {
 				+ "INTO bulletin_table "
 				+ "(title, userName, content) "
 				+ "VALUES "
-				+ "(?, ?, ?)";
+				+ "(?, ?, ?, ?)";
 		
 		try {
 			Class.forName(driverName);
@@ -39,6 +39,7 @@ public class PostDao {
 			ps.setString(1, post.getTitle());
 			ps.setString(2, post.getUserName());
 			ps.setString(3, post.getContent());
+			ps.setString(4, post.getFiles());
 			insertCount = ps.executeUpdate();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -85,7 +86,8 @@ public class PostDao {
 				String regDate = rs.getString("regDate");
 				int hit = rs.getInt("hit");
 				String content = rs.getString("content");
-				post = new Post(prevId, title, userName, regDate, hit, content);
+				String files = rs.getString("files");
+				post = new Post(prevId, title, userName, regDate, hit, content, files);
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -126,7 +128,8 @@ public class PostDao {
 				String regDate = rs.getString("regDate");
 				int hit = rs.getInt("hit");
 				String content = rs.getString("content");
-				post = new Post(nextId, title, userName, regDate, hit, content);
+				String files = rs.getString("files");
+				post = new Post(nextId, title, userName, regDate, hit, content, files);
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -174,8 +177,9 @@ public class PostDao {
 				String regDate = rs.getString("regDate");
 				int hit = rs.getInt("hit");
 				String content = rs.getString("content");
+				String files = rs.getString("files");
 				int commentsCount = rs.getInt("commentsCount");
-				post = new PostView(id, title, userName, regDate, hit, content, commentsCount);
+				post = new PostView(id, title, userName, regDate, hit, content, commentsCount, files);
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -222,8 +226,9 @@ public class PostDao {
 				String userName = rs.getString("userName");
 				String regDate = rs.getString("regDate");
 				int hit = rs.getInt("hit");
+				String files = rs.getString("files");
 				int commentsCount = rs.getInt("commentsCount");
-				posts.add(new PostView(id, title, userName, regDate, hit, commentsCount));
+				posts.add(new PostView(id, title, userName, regDate, hit, commentsCount, files));
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -282,7 +287,7 @@ public class PostDao {
 		
 		Connection conn = null;
 		PreparedStatement ps = null;
-		String sql = "UPDATE bulletin_table SET title=?, content=? WHERE id=?";
+		String sql = "UPDATE bulletin_table SET title=?, content=?, files=? WHERE id=?";
 		
 		try {
 			Class.forName(driverName);
@@ -290,7 +295,8 @@ public class PostDao {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, post.getTitle());
 			ps.setString(2, post.getContent());
-			ps.setInt(3, post.getId());
+			ps.setString(3, post.getFiles());
+			ps.setInt(4, post.getId());
 			updateCount = ps.executeUpdate();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
