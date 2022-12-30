@@ -5,77 +5,94 @@
 <html>
 <head>
     <style>
+
+		/* 공통 */
         * {
             box-sizing: border-box;
         }
 
-        table {
-            border-collapse: collapse;
-        }
+		form {
+				width: 800px;
+				display: flex;
+				flex-direction: column;
+		}
 
-        section {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin: auto;
-            background-color: #f2f2f2;
-            width: 850px;
-            padding-top: 10px;
-            border-radius: 10px;
-        }
+		table {
+			border-collapse: collapse;
+		}
+
+		/* 메인 컨테이너 */
+		section {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			margin: auto;
+			background-color: #f2f2f2;
+			width: 850px;
+			padding-top: 10px;
+			border-radius: 10px;
+		}
         
+		/* 헤더 */
         header .title {
-            padding: 10px;
+			padding: 10px;
             width: 800px;
             border-bottom: 1px solid gray;
             margin: 0px;
         }
+		
+			/* 헤더 - 작성 정보 */
+			header .regInfo {
+				margin: 10px 0px;
+			}
 
-        header .regDate {
-            margin: 10px 0px;
-        }
+			.files a{
+				font-size: 20px;
+			}
 
-        .detail_body .content {
+			.files a:link, .files a:visited {
+				text-decoration: none;
+				color: darkslategray;
+			}
+			
+		/* 본문 */
+		.content {
             padding: 10px;
             width: 800px;
             font-size: 18px;
             background-color: white;
         }
 
-        .content::placeholder {
-            font-size: 18px;
-        }
+			.content::placeholder {
+				font-size: 18px;
+			}
 
-        form {
-            width: 800px;
-            display: flex;
-            flex-direction: column;
-        }
+			/* 버튼 */
+			.btns {
+				display: flex;
+				justify-content: right;
+			}
 
-        .btns {
-            display: flex;
-            justify-content: right;
-        }
+			.btns input, .btns a {
+				display: flex;
+				padding: 10px;
+				justify-content: center;
+				align-self: flex-end;
+				width: 80px;
+				border: 1px solid gray;
+				margin-left: 10px;
+				
+				text-align: center;
+				font-size: 14px;
+				font-weight: bold;
+				text-align: center;
+				text-decoration: none;
+				color: white;
+				background-color: gray;
+			}
 
-        .btns input, .btns a {
-        	display: flex;
-        	padding: 10px;
-        	justify-content: center;
-            align-self: flex-end;
-            width: 80px;
-            border: 1px solid gray;
-			margin-left: 10px;
-			
-            text-align: center;
-			font-size: 14px;
-            font-weight: bold;
-            text-align: center;
-            text-decoration: none;
-           	color: white;
-			background-color: gray;
-        }
-
+		/* 이전글, 다음글 */
         .otherPage table {
             width: 800px;
             table-layout: fixed;
@@ -100,36 +117,30 @@
         	color: darkslategray;
         }
         
-        .otherPage .desc {
-       		width: 10%;
-       	}
-       	
-       	.otherPage .writer {
-       		width: 10%;
-       	}
-       	
-       	.otherPage .regDate {
-       		width: 23%;
-       	}
-       	
-       	.otherPage .hit {
-       		width: 7%;
-       	}
-
-        .otherPage .desc {
-            text-indent: 10%;
-        }
+        .otherPage .desc {width: 10%;}
+       	.otherPage .writer {width: 10%;}
+       	.otherPage .regDate {width: 23%;}
+		.otherPage .hit {width: 7%;}
+		.otherPage .desc {text-indent: 10%;}
 
         .comment {
             width: 800px;
         }
 
+		/* 댓글 개수 */
+		.commentNumber {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+		/* 댓글 목록 */
         .comment_table {
         	width: 100%;
             background-color: white;
             border-radius: 10px;
             margin: 10px 0;
         }
+
         .comment_userName {
             padding: 10px 0 10px 10px;
             font-weight: bold;
@@ -140,14 +151,30 @@
             text-decoration: none;
             color: gray;
         }
+
         .comment_regDate {
             width: 20%;
+			white-space: nowrap;
+            padding-right: 20px;
         }
 
         .comment_userName {
             width: 80%;
         }
+
+		.comment_delete_form {
+			width: 30px;
+		}
+		
+		.comment_delete_td {
+			padding-right: 10px;
+		}
         
+		.comment_content {
+            padding: 10px 10px;
+        }
+
+		/* 댓글 추가란 */
         .add_comment {
             margin: 10px 0;
         }
@@ -159,15 +186,6 @@
             resize: none;
             padding: 10px;
         }
-
-        .comment_content {
-            padding: 10px 10px;
-        }
-
-		.comment_regDate {
-            white-space: nowrap;
-            padding-right: 20px;
-		}
 		        
         .comment_delete {
             background-color: gray;
@@ -178,25 +196,13 @@
             width: 30px;
             cursor: pointer;
         }
-        .comment_delete_form {
-        	width: 30px;
-        }
-        
-        .comment_delete_td {
-        	padding-right: 10px;
-        }
-        
+
         .add_comment_submit {
             margin: 10px 0;
             height: 30px;
             background-color: white;
             border: 2px solid hotpink;
             border-radius: 10px;
-        }
-
-        .commentNumber {
-            font-size: 18px;
-            font-weight: bold;
         }
 
     </style>
@@ -206,16 +212,30 @@
 </head>
 <body>
     <section>
+
+		<!-- 게시글 정보-->
         <header>
             <h1 class="title">
                 ${post.title}
             </h1>
-            <div class="regDate">
+            <div class="regInfo">
                 <span>작성일: ${post.regDate} |</span>
                 <span>작성자: ${post.userName} |</span>
                 <span>조회수: ${post.hit}</span>
             </div>
+			<div class="files">
+				<span>💾 첨부파일: </span>
+				<!-- 첨부파일 -->
+				<c:forTokens var="fileName" items="${post.files}" delims="," varStatus="st">
+					<a href="upload/${fileName}" download><strong>${fileName} </strong></a>
+					<c:if test="${!st.last}">
+					 || 
+					</c:if>
+				</c:forTokens>
+			</div>
         </header>
+
+		<!-- 본문 -->
         <div class="detail_body">
             <p class="content">
                 ${post.content}
@@ -226,6 +246,8 @@
                 <a href="delete?id=${post.id}">삭제</a>
             </div>
         </div>
+
+		<!-- 다른 페이지 -->
         <div class="otherPage">
 			<table>
 				<c:if test="${!empty nextPost}">
@@ -251,39 +273,39 @@
         
         <!-- 댓글 -->
         <div class="comment">
-           		<c:if test="${empty comments}">
-					<tr>
-						<td>등록된 댓글이 없습니다.</td>
-					</tr>
-           		</c:if>
-           		
-     		    <c:if test="${!empty comments}">
-                    <p class="commentNumber">${post.commentsCount}개의 댓글</p>
-                    <hr>
-     		    	<c:forEach var="comment" items="${comments}">
-			            <table class="comment_table">
-							<tr>
-			                    <td class="comment_userName">
-			                        <a href="#">${comment.userId}</a>
-			                    </td>
-			                    <td class="comment_regDate">${comment.regDate}</td>
-			                    <td class="comment_delete_td">
-			                    	<form action="comment" method="POST" class="comment_delete_form">
-			                    		<input type="submit" class="comment_delete" value="X️"/>
-			                    		<input type="hidden" name="commentId" value="${comment.commentId}"/>
-			                    		<input type="hidden" name="_method" value="DELETE"/>
-            							<input type="hidden" name="postId" value="${post.id}">
-			                    	</form>
-			                    </td>
-			                </tr>
-			                <tr>
-			                    <td  class="comment_content" colspan="3">
-			                        ${comment.content}
-			                    </td>
-			                </tr>
-			            </table>
-     		    	</c:forEach>
-           		</c:if>
+			<c:if test="${empty comments}">
+				<tr>
+					<td>등록된 댓글이 없습니다.</td>
+				</tr>
+			</c:if>
+			
+			<c:if test="${!empty comments}">
+				<p class="commentNumber">${post.commentsCount}개의 댓글</p>
+				<hr>
+				<c:forEach var="comment" items="${comments}">
+					<table class="comment_table">
+						<tr>
+							<td class="comment_userName">
+								<a href="#">${comment.userId}</a>
+							</td>
+							<td class="comment_regDate">${comment.regDate}</td>
+							<td class="comment_delete_td">
+								<form action="comment" method="POST" class="comment_delete_form">
+									<input type="submit" class="comment_delete" value="X️"/>
+									<input type="hidden" name="commentId" value="${comment.commentId}"/>
+									<input type="hidden" name="_method" value="DELETE"/>
+									<input type="hidden" name="postId" value="${post.id}">
+								</form>
+							</td>
+						</tr>
+						<tr>
+							<td  class="comment_content" colspan="3">
+								${comment.content}
+							</td>
+						</tr>
+					</table>
+				</c:forEach>
+			</c:if>
         </div>
         
         <!-- 댓글 추가 버튼 -->
